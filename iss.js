@@ -1,12 +1,20 @@
 const request = require('request');
 
 const nextISSTimesForMyLocation = callback => {
+  fetchMyIP((error, ip) => {
+    if (error) return callback(error, null);
 
+    fetchCoordsByIP(ip, (error, loc) => {
+      if (error) return callback(error, null);
 
+      fetchISSFlyOverTimes(loc, (error, nextPasses) => {
+        if (error) return callback(error, null);
+
+        callback(null, nextPasses);
+      });
+    });
+  });
 };
-
-
-
 
 //function to fetch IP
 const fetchMyIP = callback => {
@@ -53,5 +61,14 @@ const fetchISSFlyOverTimes = (coords, callback) => {
   });
 };
 
+const printPassTimes = function(passTimes) {
+  for (const pass of passTimes) {
+    const datetime = new Date(0);
+    datetime.setUTCSeconds(pass.risetime);
+    const duration = pass.duration;
+    console.log(`Next pass at ${datetime} for ${duration} seconds!`);
+  }
+};
 
-module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
+
+module.exports = { printPassTimes, fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };

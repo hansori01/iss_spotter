@@ -1,14 +1,15 @@
 // require and run our main fetch function
-const { nextISSTimesForMyLocation, fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes } = require('./iss');
+const { printPassTimes, nextISSTimesForMyLocation, /*fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes */} = require('./iss');
 
 nextISSTimesForMyLocation((error, passTimes) => {
   if (error) {
-    return console.log("It didn't work!", error);
-  } 
-  console.log(passTimes);
+    return console.log("nextISSTimesForMyLocation...It didn't work!", error);
+  }
+  printPassTimes(passTimes);
 });
 
 
+//old code before refactoring
 // // invokes function with callback function that relays the msg depending on ip result
 // fetchMyIP((error, ip) => {
 //   if (error) {
