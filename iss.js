@@ -16,6 +16,8 @@ const nextISSTimesForMyLocation = callback => {
   });
 };
 
+
+
 //function to fetch IP
 const fetchMyIP = callback => {
   request('https://api.ipify.org/?format=json', (error, response, body) => {
